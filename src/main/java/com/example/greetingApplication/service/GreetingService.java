@@ -46,4 +46,12 @@ public class GreetingService {
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Greeting not found with ID: " + id));
     }
+
+    // Delete a greeting by ID
+    public void deleteGreeting(Long id) {
+        if (!greetingRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Greeting not found with ID: " + id);
+        }
+        greetingRepository.deleteById(id);
+    }
 }
