@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 public class GreetingService {
 
@@ -28,5 +30,10 @@ public class GreetingService {
     public Greeting getGreetingById(Long id) {
         return greetingRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Greeting not found with ID: " + id));
+    }
+
+    // Retrieve all stored greeting messages
+    public List<Greeting> getAllGreetings() {
+        return greetingRepository.findAll();
     }
 }
