@@ -1,35 +1,24 @@
 package com.example.greetingApplication.service;
 
+import com.example.greetingApplication.model.Greeting;
+import com.example.greetingApplication.repository.GreetingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GreetingService {
 
-    private String greetingMessage = "Hello World";
+    private final GreetingRepository greetingRepository;
 
-    // Method to get a personalized greeting
-    public String getGreeting(String firstName, String lastName) {
-        if (firstName != null && !firstName.isEmpty() && lastName != null && !lastName.isEmpty()) {
-            return "Hello, " + firstName + " " + lastName + "!";
-        } else if (firstName != null && !firstName.isEmpty()) {
-            return "Hello, " + firstName + "!";
-        } else if (lastName != null && !lastName.isEmpty()) {
-            return "Hello, Mr./Ms. " + lastName + "!";
-        }
-        return greetingMessage;
+    @Autowired
+    public GreetingService(GreetingRepository greetingRepository) {
+        this.greetingRepository = greetingRepository;
     }
 
-    public String createGreeting(String message) {
-        return "Greeting received: " + message;
-    }
-
-    public String updateGreeting(String message) {
-        this.greetingMessage = message;
-        return "Greeting updated successfully!";
-    }
-
-    public String deleteGreeting() {
-        this.greetingMessage = "No greeting available.";
-        return "Greeting deleted successfully!";
+    // Save a new greeting message
+    public Greeting saveGreeting(String message) {
+        Greeting greeting = new Greeting();
+        greeting.setMessage(message);
+        return greetingRepository.save(greeting);
     }
 }
