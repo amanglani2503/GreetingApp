@@ -3,7 +3,9 @@ package com.example.greetingApplication.controller;
 import com.example.greetingApplication.model.Greeting;
 import com.example.greetingApplication.service.GreetingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -34,5 +36,11 @@ public class GreetingController {
     @GetMapping("/all")
     public List<Greeting> getAllGreetings() {
         return greetingService.getAllGreetings();
+    }
+
+    // PUT request- Updates an existing greeting message
+    @PutMapping("/id/{id}")
+    public Greeting updateGreeting(@PathVariable Long id, @RequestBody String newMessage) {
+        return greetingService.updateGreeting(id, newMessage);
     }
 }
